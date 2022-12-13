@@ -13,7 +13,7 @@
     margin-top: 50px;
 }
 
-#form{
+#input{
     padding: 10px;
     border-radius: 1rem;
 }
@@ -32,10 +32,23 @@ button{
 #card{
     display: grid;
     place-items: center;
-    height: 250px;
-    width: 180px;
+    height: 300px;
+    width: 500px;
     border: 2px solid black;
     border-radius: 2rem;
-    margin-left: 595px;
+    margin-left: 440px;
     margin-top: 40px;
+}
+
+.poke img{
+    height: 70px;
+    width: 70px;
+}
+
+.poke{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    flex-direction: column;
 }

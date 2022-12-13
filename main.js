@@ -1,19 +1,19 @@
 const formList = document.getElementById('formList')
-const form = document.getElementById('form')
+const input = document.getElementById('input')
 const card = document.getElementById('card')
 
-const baseURL = 'https://pokeapi.co/api/v2/pokemon'
-
-let isFetching = false
+const baseURL = 'https://pokeapi.co/api/v2/pokemon/'
 
 const fecthingPokemon = async () => {
-    const response = await fetch(`${baseURL}?offset=0&limit=8`)
+    const searchPokemon = baseURL + input.value
+    const response = await fetch(`${searchPokemon}`)
     const dates = await response.json()
     
     return dates
 }
 
-const getPokemonHtml = ({id, name, sprites, height, weight, types}) => {
+const getPokemonHtml = (pokemon) => {
+    const {name, id, sprites, types, height, weight} = pokemon
     return `
         <div class="poke">
             <img src="${sprites.other.home.front_default}" />
@@ -33,18 +33,17 @@ const getPokemonHtml = ({id, name, sprites, height, weight, types}) => {
 }
 
 const renderPokemonList = (pokemonList) => {
-    const cardsHTML = pokemonList.map(pokemon => getPokemonHtml(pokemon)).join('')
-    formList.innerHTML = cardsHTML
+    card.innerHTML = getPokemonHtml(pokemonList)
 }
 
 const errorMessage = () => {
-    formList.innerHTML = `
+    card.innerHTML = `
     <h1>No existe el Pokemón solicitado</h1>
     `
 }
 
 const errorNumberMessage = () => {
-    formList.innerHTML = `
+    card.innerHTML = `
     <h1>No existe el ID solicitado</h1>
     `
 }
@@ -53,27 +52,18 @@ const errorNumberMessage = () => {
 
 
 
-const init = () => {
-    window.addEventListener('DOMContentLoaded', async () => {
-        const {next, results} = await fecthingPokemon()
-        console.log(next, 'next', results, 'results')
+function init () {
+    formList.addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const searchValue = input.value
+        if (!searchValue) {
+            errorMessage()
+        } let result = await fecthingPokemon().catch(() => {
+            errorNumberMessage(searchValue)
+        })
 
-        const URLS = results.map(pokemon => pokemon.url)
-
-        const infoPokemones = Promise.all(
-            URLS.map(async url => {
-                const nextPokemon = await fetch(url)
-                return await nextPokemon.json()
-            })
-        )
-
-
-            console.log(infoPokemones)
-        renderPokemonList(infoPokemones)
+        renderPokemonList(result)
     })
-
-    formList.addEventListener('submit', renderPokemonList)
-
 }
 
 init()
