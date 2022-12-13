@@ -4,6 +4,10 @@
     box-sizing: border-box;
 }
 
+body{
+    background: rgba(38, 0, 255, 0.397);
+}
+
 #formList{
     display: flex;
     align-items: center;
@@ -11,6 +15,10 @@
     gap: 20px;
     flex-direction: column;
     margin-top: 50px;
+}
+
+label{
+    font-size: 20px;
 }
 
 #input{
@@ -34,10 +42,13 @@ button{
     place-items: center;
     height: 300px;
     width: 500px;
-    border: 2px solid black;
     border-radius: 2rem;
     margin-left: 440px;
     margin-top: 40px;
+    background: rgba( 255, 255, 255, 0.45 );
+    filter: blur( 0.2px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 
 .poke img{
